@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import  render
 from django.template.loader import  get_template
 # dont repeat yourself : DRY
+# from blog.models import BlogPost
 from .forms import *
 from blog.models import *
 def home_page(request):

@@ -18,14 +18,15 @@ print(j.blogpost_set.all())       # this is used to list out all the blogposts a
 class BlogPost(models.Model):  #blogoist_set ---> queryset
     # id = IntegerField()
     user = models.ForeignKey(User,default=1,null=True,on_delete=models.SET_NULL)
-    title = models.CharField(max_length=20)
+    title = models.CharField(max_length=50)
     slug = models.SlugField(unique=True)  # hello world --> hello-world
     content = models.TextField(null = True, blank=True)
-    # publish_date = models.DateTimeField(default=datetime.now(), null=True, blank=True)
-    # timestamp = models.DateTimeField(auto_now_add=True)
-    # updated = models.DateTimeField(auto_now=True)
-    # class Meta:
-    #     ordering = ['-publish_date' , '-timestamp' , '-updated']
+    publish_date = models.DateTimeField(auto_now_add=False, auto_now=False, null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-pk' , '-publish_date', '-timestamp', '-updated']
     def get_absolute_url(self):
         return f"/blog/{self.slug}/"
     def get_edit_url(self):
