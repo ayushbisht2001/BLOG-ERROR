@@ -1,6 +1,6 @@
 
 from django.contrib import admin
-from django.urls import path , re_path
+from django.urls import path
 from .views import *
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('<str:slug>/edit/', blog_post_update_view),
     path('<str:slug>/delete/', blog_post_delete_view),
 ]
+
 

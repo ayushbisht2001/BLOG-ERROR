@@ -2,20 +2,28 @@ from django.http import HttpResponse
 from django.shortcuts import  render
 from django.template.loader import  get_template
 # dont repeat yourself : DRY
-
-
+from .forms import *
+from blog.models import *
 def home_page(request):
-    my_title = "hello there...."
-    context = {"title": my_title,"my_list": ["shabbu","sanu","satvik","satvika"]}
+    my_title = "Welcome you all... Pdkrr jana ."
+    qs= BlogPost.objects.all()[:5]
+    context = {"title": my_title,"blog_list": qs }
     # doc = "<h1>{title}</h1>".format(title=my_title)
     # django_rendered_doc = "<h1>{{title}}</h1>".format(title = my_title)
+    # if request.user.is_authenticated :
+    #     context = {"title" : my_title , "my_list": [1,2,3,4,5]}
     return render(request,"home.html",context)
 
 def about_page(request):
     return render(request,"about.html" , {"title" : "About US"})
 
 def contact_page(request):
-    return render(request,"hello_world.html",{"title" : "Contact US"})
+    form = ContactForm(request.POST or None)
+    if form.is_valid():
+        print(form.cleaned_data)
+        form = ContactForm()
+    context = {"title" : "Contact US" , "form" : form}
+    return render(request,"form.html",context)
 
 # This is something like writing html on notepad and then render it out to get the final result
 def txtRendering_page(request):

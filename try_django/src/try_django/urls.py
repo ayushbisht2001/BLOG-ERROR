@@ -22,7 +22,7 @@ urlpatterns = [
     path('home',home_page),
     path('blog-new/', blog_post_create_view),
 
-    path('blog/',include('blog.urls')),
+    path('blog/', include('blog.urls')),
 
     re_path(r'^about[a-zA-Z0-9]*/$',about_page),        # re_path :  regular expression path
     re_path(r'^contact[a-zA-Z0-9]*/$',contact_page),
