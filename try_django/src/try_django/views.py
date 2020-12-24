@@ -5,6 +5,8 @@ from django.template.loader import  get_template
 # from blog.models import BlogPost
 from .forms import *
 from blog.models import *
+
+
 def home_page(request):
     my_title = "Welcome you all... Pdkrr jana ."
     qs= BlogPost.objects.all()[:5]

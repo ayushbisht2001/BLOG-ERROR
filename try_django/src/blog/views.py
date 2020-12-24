@@ -49,8 +49,10 @@ from .forms import *
 def blog_post_list_view(request):
     # list out objects
     #  also search
-    qs = BlogPost.objects.all() # list of python objects
-
+    qs = BlogPost.objects.all().published() # list of python objects
+    if request.user.is_authenticated:
+        my_qs = BlogPost.objects.filter(user=request.user)
+        qs = (qs | my_qs).distinct()
     # qs = BlogPost.objects.filter(title__icontains = 'hello')        # Searching .... .. . On the basis of title
     template_name = 'blog/list.html'
     context = {'object_list': qs}

@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path , re_path , include
 from .views import *
 from blog.views import *
-
+from django.conf import  settings
 urlpatterns = [
     path('home',home_page),
     path('blog-new/', blog_post_create_view),
@@ -32,6 +32,9 @@ urlpatterns = [
     re_path(r'^text[a-zA-Z0-9]*/$',txtRendering_page),
     # re_path(r'^blog/(?P<slug>\w+)/$', blog_post_detail_page),
 
-
 ]
-
+if settings.DEBUG:
+    # test mode
+    from django.conf.urls.static import static
+    urlpatterns += static(settings.STATIC_URL,document_root = settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
