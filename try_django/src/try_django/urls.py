@@ -18,10 +18,11 @@ from django.urls import path , re_path , include
 from .views import *
 from blog.views import *
 from django.conf import  settings
+from searches.views import *
 urlpatterns = [
     path('home',home_page),
     path('blog-new/', blog_post_create_view),
-
+    path('search/' , search_view),
     path('blog/', include('blog.urls')),
 
     re_path(r'^about[a-zA-Z0-9]*/$',about_page),        # re_path :  regular expression path

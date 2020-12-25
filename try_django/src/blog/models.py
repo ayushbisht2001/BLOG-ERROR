@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from datetime import *
 from django.utils import timezone
+from django.db.models import Q
 User = settings.AUTH_USER_MODEL
 
 #  NOTE :
@@ -19,6 +20,17 @@ class BlogPostQuerySet(models.QuerySet):        # customized  inbuilt    get_que
         now = timezone.now()
         return self.filter(publish_date__lte=now)
 
+    def search(self,query):
+        lookup = (
+                Q(title__icontains=query) |
+                Q(content__icontains=query) |
+                Q(slug__icontains=query) |
+                Q(user__first_name__icontains=query) |
+                Q(user__last_name__icontains=query)|
+                Q(user__email__icontains=query)
+                )
+        return self.filter(lookup)
+
 
 class BlogPostManager(models.Manager):
     def get_queryset(self):
@@ -27,13 +39,18 @@ class BlogPostManager(models.Manager):
     def published(self):
         return self.get_queryset().published()
 
+    def search(self , query = None):
+        if query is None:
+            return self.get_queryset().none()
+        return self.get_queryset().published().search(query)
+
 
 
 
 class BlogPost(models.Model):  #blogoist_set ---> queryset
     # id = IntegerField()
     user = models.ForeignKey(User,default=1,null=True,on_delete=models.SET_NULL)
-    image = models.FileField(upload_to='image/', blank=True, null=True)
+    image = models.ImageField(upload_to='image/', blank=True, null=True)
     title = models.CharField(max_length=50)
     slug = models.SlugField(unique=True)  # hello world --> hello-world
     content = models.TextField(null = True, blank=True)

@@ -64,7 +64,7 @@ def blog_post_create_view(request):
     # create objects / create blogs
     # use of form
     # request.user will return something if "   @ staff_member_required or above one is present "
-    form = BlogPostModelForm(request.POST or None)
+    form = BlogPostModelForm(request.POST or None , request.FILES or None)
     if form.is_valid():
         print(form.cleaned_data)
         obj = form.save(commit = False)
