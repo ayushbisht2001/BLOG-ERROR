@@ -88,6 +88,24 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = (
+ 'django.contrib.auth.backends.ModelBackend',
+ 'allauth.account.auth_backends.AuthenticationBackend',
+ )
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -106,23 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = (
- 'django.contrib.auth.backends.ModelBackend',
- 'allauth.account.auth_backends.AuthenticationBackend',
- )
 
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -146,13 +148,13 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'staticfiles')
 
 ]
-SITE_ID = 1
+SITE_ID = 2
 MEDIA_ROOT =  os.path.join(LOCAL_STATIC_CDN_PATH,'media')
 MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = "/" # otherwise it is redirected to the default page   " http://127.0.0.1:8000/accounts/profile/ "
+LOGIN_REDIRECT_URL = "/home" # otherwise it is redirected to the default page   " http://127.0.0.1:8000/accounts/profile/ "
 LOGOUT_REDIRECT_URL = "/home"
 
 
