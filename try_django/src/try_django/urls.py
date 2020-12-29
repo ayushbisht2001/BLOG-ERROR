@@ -19,6 +19,8 @@ from .views import *
 from blog.views import *
 from django.conf import  settings
 from searches.views import *
+from register.views import *
+from django.views.generic import TemplateView
 urlpatterns = [
     path('home',home_page),
     path('blog-new/', blog_post_create_view),
@@ -28,12 +30,17 @@ urlpatterns = [
     re_path(r'^about[a-zA-Z0-9]*/$',about_page),        # re_path :  regular expression path
     re_path(r'^contact[a-zA-Z0-9]*/$',contact_page),
     path('admin/', admin.site.urls),
-
+    path('register/',register),
+    # path("",include("user")),
     re_path(r'^example[a-zA-Z0-9]*/$',example_page),
     re_path(r'^text[a-zA-Z0-9]*/$',txtRendering_page),
     # re_path(r'^blog/(?P<slug>\w+)/$', blog_post_detail_page),
+    path('',include("django.contrib.auth.urls")),  # for login and logout and redirect to the html file of registration folder
+    path('accounts/', include('allauth.urls')),
+    # path('',TemplateView.as_view(template_name='login.html')),
 
-]
+            ]
+
 if settings.DEBUG:
     # test mode
     from django.conf.urls.static import static

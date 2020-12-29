@@ -38,6 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'searches',
+    'register',
+    'crispy_forms',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +63,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'template'),os.path.join(BASE_DIR, 'blog/template')
-            ,os.path.join(BASE_DIR, 'searches/template')],
+            ,os.path.join(BASE_DIR, 'searches/template'),os.path.join(BASE_DIR, 'register/template')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -99,6 +106,23 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+ 'django.contrib.auth.backends.ModelBackend',
+ 'allauth.account.auth_backends.AuthenticationBackend',
+ )
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -122,5 +146,13 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'staticfiles')
 
 ]
+SITE_ID = 1
 MEDIA_ROOT =  os.path.join(LOCAL_STATIC_CDN_PATH,'media')
 MEDIA_URL = '/media/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_REDIRECT_URL = "/" # otherwise it is redirected to the default page   " http://127.0.0.1:8000/accounts/profile/ "
+LOGOUT_REDIRECT_URL = "/home"
+
+
