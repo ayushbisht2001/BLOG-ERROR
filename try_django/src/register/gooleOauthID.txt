@@ -1,0 +1,5 @@
+Your Client ID
+114761627299-6bd0rrvvatmn95q3l3hibkkpre356d1u.apps.googleusercontent.com
+
+Your Client Secret
+T8GRlP4R9qTXH-spYQQ84tn3

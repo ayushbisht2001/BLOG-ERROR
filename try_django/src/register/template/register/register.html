@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<form method = "POST" >{% csrf_token %}
+   {{form|crispy }}
+<!-- {{ form.captcha }}        :  to display only CaptchaField-->
+
+<button type = "submit" class="btn-success">Register</button>
+
+</form>
+
+{% endblock %}

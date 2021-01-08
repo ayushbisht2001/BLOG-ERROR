@@ -38,7 +38,9 @@ urlpatterns = [
     path('',include("django.contrib.auth.urls")),  # for login and logout and redirect to the html file of registration folder
     path('accounts/', include('allauth.urls')),
     # path('',TemplateView.as_view(template_name='login.html')),
-
+path('captcha/', include('captcha.urls')),
+path('forget/',forget),
+path('enterotp/',EnterOtp),
             ]
 
 if settings.DEBUG:

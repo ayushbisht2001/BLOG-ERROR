@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -157,4 +158,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = "/home" # otherwise it is redirected to the default page   " http://127.0.0.1:8000/accounts/profile/ "
 LOGOUT_REDIRECT_URL = "/home"
 
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST =    'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT =   587
+EMAIL_HOST_USER = 'dsalearning011@gmail.com'
+EMAIL_HOST_PASSWORD = 'Dsa@_#123'

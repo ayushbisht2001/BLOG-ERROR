@@ -18,4 +18,3 @@ class BlogPostModelForm(forms.ModelForm):
         if qs.exists():
             raise forms.ValidationError("This title is already been used , pls add another one ")
         return title
-

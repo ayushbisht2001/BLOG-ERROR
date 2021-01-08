@@ -1,20 +1,24 @@
 from django.http import HttpResponse
 from django.shortcuts import  render
 from django.template.loader import  get_template
+
 # dont repeat yourself : DRY
 # from blog.models import BlogPost
+
 from .forms import *
 from blog.models import *
 
 
 def home_page(request):
-    my_title = "Welcome you all... Pdkrr jana ."
+    my_title = "HOME"
     qs= BlogPost.objects.all()[:5]
     context = {"title": my_title,"blog_list": qs }
     # doc = "<h1>{title}</h1>".format(title=my_title)
     # django_rendered_doc = "<h1>{{title}}</h1>".format(title = my_title)
+
     # if request.user.is_authenticated :
     #     context = {"title" : my_title , "my_list": [1,2,3,4,5]}
+
     return render(request,"home.html",context)
 
 def about_page(request):
@@ -41,5 +45,5 @@ def example_page(request):
     context = {"title" : "Example"}
     template_name = "hello_world.html"
     template_obj = get_template(template_name)
+    print(template_obj , "hello world 123456")
     return HttpResponse(template_obj.render(context))
-

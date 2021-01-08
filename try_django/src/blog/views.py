@@ -51,7 +51,7 @@ def blog_post_list_view(request):
     #  also search
     qs = BlogPost.objects.all().published() # list of python objects
     if request.user.is_authenticated:
-        my_qs = BlogPost.objects.filter(user=request.user)
+        my_qs = BlogPost.objects.filter(user=request.user)  # here filter is used  :  getting objects belongs to currently authenticated user
         qs = (qs | my_qs).distinct()
     # qs = BlogPost.objects.filter(title__icontains = 'hello')        # Searching .... .. . On the basis of title
     template_name = 'blog/list.html'
@@ -64,23 +64,23 @@ def blog_post_create_view(request):
     # create objects / create blogs
     # use of form
     # request.user will return something if "   @ staff_member_required or above one is present "
-    form = BlogPostModelForm(request.POST or None , request.FILES or None)
+    form = BlogPostModelForm(request.POST or None , request.FILES or None)      # request.FILES is used to upload the file from the device, s.t images in our case
     if form.is_valid():
         print(form.cleaned_data)
-        obj = form.save(commit = False)
-        obj.user = request.user
+        obj = form.save(commit = False)             # commit = False means it is not saving the data .
+        obj.user = request.user                     # assigning blog only to that user, who actually create it
         obj.title = form.cleaned_data.get("title")
-        obj.save()
+        obj.save()                                   # here by default commit is True
         # title = form.cleaned_data['title']
         # slug = form.cleaned_data["slug"]
         # content = form.cleaned_data["content"]
 
         """
          cd = {"x" : 3, "y": 6}
-         
-         then  **cd gives (x=3,y = 6) arguments 
+
+         then  **cd gives (x=3,y = 6) arguments
          => create(**form.cleaned_data) === create(title=title, slug = slug,content = content)
-        
+
         """
         # obj = BlogPost.objects.create(**form.cleaned_data)   : this is undertaken by BlogPostModelForm
         form = BlogPostModelForm()       # To reinitialise the form
@@ -105,13 +105,13 @@ def blog_post_create_view(request):
 
 def blog_post_detail_view(request,slug):
     # 1 object --> detail view
-    obj = get_object_or_404(BlogPost, slug=slug)  # id  :  should be an integer value
+    obj = get_object_or_404(BlogPost, slug=slug)    # id  :  should be an integer value
     template_name = "blog/detail.html"
     context = {"object": obj}
     return render(request, template_name, context)
 
 def blog_post_update_view(request,slug):
-    obj = get_object_or_404(BlogPost, slug=slug)  # id  :  should be an integer value
+    obj = get_object_or_404(BlogPost, slug=slug)    # id  :  should be an integer value
     form = BlogPostModelForm(request.POST or None ,instance=obj)
     if form.is_valid():
         form.save()
@@ -120,16 +120,10 @@ def blog_post_update_view(request,slug):
     return render(request, template_name, context)
 
 def blog_post_delete_view(request , slug):
-    obj = get_object_or_404(BlogPost, slug=slug)  # id  :  should be an integer value
+    obj = get_object_or_404(BlogPost, slug=slug)    # id  :  should be an integer value
     template_name = "blog/delete.html"
     if request.method == "POST":
         obj.delete()
         return redirect("/blog")
     context = {"object": obj}
     return render(request, template_name, context)
-
-
-
-
-
-
